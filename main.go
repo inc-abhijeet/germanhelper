@@ -20,6 +20,12 @@ type germanNoun struct {
 	Plural  string `json:"plural"`
 }
 
+type germanGrammarRule struct {
+	Nominativ string
+	Akkusativ string
+	Dativ     string
+}
+
 func main() {
 	germanNouns := []germanNoun{}
 	data, err := ioutil.ReadFile("words.json")
@@ -41,7 +47,7 @@ func main() {
 				Action: func(c *cli.Context) error {
 					result := []germanNoun{}
 					findFunc := func(noun germanNoun) bool {
-						return strings.Contains(strings.ToLower(noun.De), strings.ToLower(c.Args().Get(0)))
+						return identifyWord(noun.De, c.Args().Get(0))
 					}
 					arcee.Select(findFunc, germanNouns, &result)
 					if len(result) > 0 {
@@ -62,7 +68,7 @@ func main() {
 				Action: func(c *cli.Context) error {
 					result := []germanNoun{}
 					findFunc := func(noun germanNoun) bool {
-						return strings.Contains(strings.ToLower(noun.En), strings.ToLower(c.Args().Get(0)))
+						return identifyWord(noun.En, c.Args().Get(0))
 					}
 					arcee.Select(findFunc, germanNouns, &result)
 					if len(result) > 0 {
@@ -86,12 +92,23 @@ func main() {
 }
 
 func printResult(nouns []germanNoun) error {
+	grammerRules := make(map[string]germanGrammarRule)
+	grammerRules["Der"] = germanGrammarRule{"der / ein", "den / einen", "dem / einem"}
+	grammerRules["Die"] = germanGrammarRule{"die / eine", "die / eine", "die / einer"}
+	grammerRules["Das"] = germanGrammarRule{"das / ein", "das / ein", "dem / einem"}
+
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"Article", "German", "English"})
+	table.SetHeader([]string{"German", "English", "Nominativ", "Akusativ", "Dativ"})
 	for _, n := range nouns {
-		row := []string{n.Article, n.Article + " " + n.De, n.En}
+		rule := grammerRules[n.Article]
+		row := []string{n.Article + " " + n.De, n.En, rule.Nominativ, rule.Akkusativ, rule.Dativ}
 		table.Append(row)
 	}
 	table.Render()
 	return nil
+}
+
+func identifyWord(noun string, arg string) bool {
+	return strings.ToLower(noun) == strings.ToLower(arg)
+	//return strings.Contains(strings.ToLower(noun), strings.ToLower(arg))
 }
