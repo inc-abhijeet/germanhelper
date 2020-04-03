@@ -12,7 +12,7 @@ git clone git@github.com:cameronnorman/german-helper.git
 ## Usage
 
 ### English Noun
-
+```bash
 > gh en glass
 
 +---------+------------------+------------+
@@ -21,9 +21,9 @@ git clone git@github.com:cameronnorman/german-helper.git
 | Das     | Das Glas         | Glass      |
 | Die     | Die Sonnenbrille | Sunglasses |
 +---------+------------------+------------+
-
+```
 ### German Noun
-
+```bash
 > gh de Wort
 
 +---------+-------------------+----------------+
@@ -36,3 +36,4 @@ git clone git@github.com:cameronnorman/german-helper.git
 | Die     | Die Antwort       | Reply          |
 | Das     | Das Sprichwort    | Saying         |
 +---------+-------------------+----------------+
+```
