@@ -1,13 +1,18 @@
 # German Helper
 
+A easy way to filter the top German nouns used to get useful information
+
 ## Installation
 ### Mac
-curl ````https://github.com/cameronnorman/german-helper` >> /usr/local/bin/gh
+```
+git clone git@github.com:cameronnorman/german-helper.git
+./build.sh
+```
 
 ## Usage
 
 ### English Noun
-
+```bash
 > gh en glass
 
 +---------+------------------+------------+
@@ -16,9 +21,9 @@ curl ````https://github.com/cameronnorman/german-helper` >> /usr/local/bin/gh
 | Das     | Das Glas         | Glass      |
 | Die     | Die Sonnenbrille | Sunglasses |
 +---------+------------------+------------+
-
+```
 ### German Noun
-
+```bash
 > gh de Wort
 
 +---------+-------------------+----------------+
@@ -31,3 +36,4 @@ curl ````https://github.com/cameronnorman/german-helper` >> /usr/local/bin/gh
 | Die     | Die Antwort       | Reply          |
 | Das     | Das Sprichwort    | Saying         |
 +---------+-------------------+----------------+
+```
