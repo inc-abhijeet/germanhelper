@@ -1,3 +1,2 @@
-go build .
-cp german-helper /usr/local/bin/gh
-exec $SHELL
+go build cmd/germanhelper/main.go
+cp main /usr/local/bin/gh
