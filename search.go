@@ -35,7 +35,7 @@ func SearchEnglishWord(word string) (result []GermanNoun) {
 }
 
 func searchCache(findFunc func(noun GermanNoun) bool, word string) (result []GermanNoun) {
-	germanNouns := fetchCached()
+	germanNouns := fetchCached("nouns.json")
 	arcee.Select(findFunc, germanNouns, &result)
 
 	return result

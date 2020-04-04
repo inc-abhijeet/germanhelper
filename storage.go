@@ -2,6 +2,7 @@ package germanhelper
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -32,9 +33,8 @@ func fetchCached(wordType string) []GermanNoun {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if _, err := os.Stat(usr.HomeDir + "/config/germanhelper/" + wordType + ".json"); err == nil {
-		// path/to/whatever exists
-		data, err := ioutil.ReadFile("words.json")
+	if _, err := os.Stat(usr.HomeDir + wordType + ".json"); err == nil {
+		data, err := ioutil.ReadFile(usr.HomeDir + wordType + ".json")
 
 		if err != nil {
 			log.Fatal("Unable to load German Nouns")
@@ -47,7 +47,8 @@ func fetchCached(wordType string) []GermanNoun {
 
 	} else if os.IsNotExist(err) {
 		client := http.Client{}
-		res, err := client.Get("https://raw.githubusercontent.com/cameronnorman/germanhelper/master/" + wordType + ".json")
+		url := "https://raw.githubusercontent.com/cameronnorman/germanhelper/master/" + wordType + ".json"
+		res, err := client.Get(url)
 		if err != nil {
 			log.Fatal("Unable to fetch required data")
 		}
@@ -55,6 +56,7 @@ func fetchCached(wordType string) []GermanNoun {
 		if err != nil {
 			log.Fatal("Unable to parse response body")
 		}
+		fmt.Printf("%v", string(url))
 		err = saveOffline(wordType+".json", body)
 		if err != nil {
 			log.Fatal("Unable to save data")
